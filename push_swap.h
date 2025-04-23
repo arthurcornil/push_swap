@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:49:22 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 16:45:24 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:17:11 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	rotate(t_stack *stack, bool log);
 void	rr(t_stack *stack_a, t_stack *stack_b);
 void	r_rotate(t_stack *stack, bool log);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
+void	push_swap(t_stack *stack_a, t_stack *stack_b);
 
 #endif

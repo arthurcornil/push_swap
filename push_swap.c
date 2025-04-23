@@ -5,61 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 13:42:12 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 16:42:24 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/23 17:06:43 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/23 17:16:41 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
-void	ft_putstr_fd(int fd, char *str)
+void	tiny_sort(t_stack *stack)
 {
-	size_t	len;
-
-	len = 0;
-	while (str[len])
-		len ++;
-	write(fd, str, len);
-}
-
-void	print_stack(int argc, t_stack *stack_a)
-{
-	int	i;
+	size_t	highest_value_index;
+	size_t	i;
 
 	i = 0;
-	printf("stack_%c\n", stack_a->id);
-	while (i < stack_a->len)
+	highest_value_index = 0;
+	while (i < stack->len)
 	{
-		printf("%d\n", stack_a->values[i]);
+		if (stack->values[i] > stack->values[highest_value_index])
+			highest_value_index = i;
 		i ++;
 	}
-	printf("--------\nlen: %zu", stack_a->len);
-	printf("\n\n");
+	if (highest_value_index == 0)
+		rotate(stack, true);
+	else if (highest_value_index == 1)
+		r_rotate(stack, true);
+	if (stack->values[0] > stack->values[1])
+		swap(stack, true);
 }
 
-int	main(int ac, char **av)
+void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
-	t_stack	stack_a;
-	t_stack	stack_b;
-	t_error	parsing_error;
-
-	if (ac == 1)
-		return (1);
-	stack_a.id = 'a';
-	stack_b.id = 'b';
-	parsing_error = parse_args(ac, av, &stack_a, &stack_b);
-	if (parsing_error != NONE)
+	if (stack_a->len >= 3)
 	{
-		if (parsing_error == DUPLICATE_ENTRIES)
-		{
-			free(stack_a.values);
-			free(stack_b.values);
-		}
-		ft_putstr_fd(2, "Error");
-		return (1);
+		tiny_sort(stack_a);
+		return ;
 	}
-	r_rotate(&stack_a, true);
-	print_stack(ac, &stack_a);
-	return (0);
 }
