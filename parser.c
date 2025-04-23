@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:51:46 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 14:16:56 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:54:23 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,48 @@ bool	are_args_valid(int argc, char **argv)
 	return (true);
 }
 
-bool	parse_args(int argc, char **argv, int *stack_a, int *stack_b)
+bool	contains_duplicates(int size, int *stack_a)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (stack_a[i] == stack_a[j])
+				return (true);
+			j ++;
+		}
+		i ++;
+	}
+	return (false);
+}
+
+t_error	parse_args(int argc, char **argv, int **stack_a, int **stack_b)
 {
 	int	i;
 
 	if (!are_args_valid(argc, argv))
-		return (false);
-	stack_a = (int *)malloc(sizeof(int) * (argc - 1));
-	if (!stack_a)
-		return (false);
-	stack_b = (int *)malloc(sizeof(int) * (argc - 1));
-	if (!stack_b)
+		return (WRONG_INT_FORMAT);
+	*stack_a = (int *)malloc(sizeof(int) * (argc - 1));
+	if (!*stack_a)
+		return (DYNAMIC_ALLOCATION_FAILURE);
+	*stack_b = (int *)malloc(sizeof(int) * (argc - 1));
+	if (!*stack_b)
 	{
-		free(stack_a);
-		return (false);
+		free(*stack_a);
+		return (DYNAMIC_ALLOCATION_FAILURE);
 	}
 	i = 0;
 	while (i < argc - 1)
 	{
-		stack_a[i] = ft_atoi(argv[i]);
+		(*(stack_a))[i] = ft_atoi(argv[i + 1]);
 		i ++;
 	}
-	return (true);
+	if (contains_duplicates(argc - 1, *stack_a))
+		return (DUPLICATE_ENTRIES);
+	return (NONE);
 }
