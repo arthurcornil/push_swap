@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:49:22 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 14:57:30 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:38:44 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ typedef enum e_error
 	DUPLICATE_ENTRIES
 }	t_error;
 
-t_error	parse_args(int argc, char **argv, int **stack_a, int **stack_b);
+typedef struct s_stack
+{
+	int		*values;
+	size_t	len;
+	char	id;
+}	t_stack;
+
+t_error	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b);
+void	swap(t_stack *stack, bool log);
+void	push(t_stack *to_stack, t_stack *from_stack);
+void	rotate(t_stack *stack, bool log);
+void	r_rotate(t_stack *stack, bool log);
 
 #endif

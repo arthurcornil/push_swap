@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:42:12 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 14:57:22 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:42:24 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,43 @@ void	ft_putstr_fd(int fd, char *str)
 	write(fd, str, len);
 }
 
-void	print_stack(int argc, int *stack_a)
+void	print_stack(int argc, t_stack *stack_a)
 {
 	int	i;
 
 	i = 0;
-	while (i < argc - 1)
+	printf("stack_%c\n", stack_a->id);
+	while (i < stack_a->len)
 	{
-		printf("%d\n", stack_a[i]);
+		printf("%d\n", stack_a->values[i]);
 		i ++;
 	}
+	printf("--------\nlen: %zu", stack_a->len);
+	printf("\n\n");
 }
 
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
-	int		*stack_a;
-	int		*stack_b;
+	t_stack	stack_a;
+	t_stack	stack_b;
 	t_error	parsing_error;
 
-	if (argc == 1)
+	if (ac == 1)
 		return (1);
-	stack_a = NULL;
-	stack_b = NULL;
-	parsing_error = parse_args(argc, argv, &stack_a, &stack_b);
+	stack_a.id = 'a';
+	stack_b.id = 'b';
+	parsing_error = parse_args(ac, av, &stack_a, &stack_b);
 	if (parsing_error != NONE)
 	{
 		if (parsing_error == DUPLICATE_ENTRIES)
 		{
-			free(stack_a);
-			free(stack_b);
+			free(stack_a.values);
+			free(stack_b.values);
 		}
 		ft_putstr_fd(2, "Error");
 		return (1);
 	}
-	print_stack(argc, stack_a);
+	r_rotate(&stack_a, true);
+	print_stack(ac, &stack_a);
 	return (0);
 }
