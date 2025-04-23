@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:27:21 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 16:41:30 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:44:04 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,4 @@ void	rr(t_stack *stack_a, t_stack *stack_b)
 	rotate(stack_a, false);
 	rotate(stack_b, false);
 	printf("rr\n");
-}
-
-void	r_rotate(t_stack *stack, bool log)
-{
-	size_t	i;
-	int		tmp;
-
-	i = stack->len - 1;
-	tmp = stack->values[stack->len - 1];
-	while (i > 0)
-	{
-		stack->values[i] = stack->values[i - 1];
-		i --;
-	}
-	stack->values[0] = tmp;
-	if (log)
-		printf("rr%c\n", stack->id);
-}
-
-void	rrr(t_stack *stack_a, t_stack *stack_b)
-{
-	r_rotate(stack_a, false);
-	r_rotate(stack_b, false);
-	printf("rrr\n");
 }

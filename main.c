@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:42:12 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 17:19:57 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:47:28 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int	main(int ac, char **av)
 	}
 	push_swap(&stack_a, &stack_b);
 	print_stack(&stack_a);
+	print_stack(&stack_b);
 	return (0);
 }

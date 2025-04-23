@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:49:22 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 17:17:11 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:05:11 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <limits.h>
 
 typedef enum e_error
 {
