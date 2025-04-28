@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:06:43 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/25 18:47:11 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/28 17:49:09 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	finish(t_stack *stack)
 
 	i = 0;
 	lowest_value_index = 0;
+	lowest_value = stack->values[0];
 	while (i < stack->len)
 	{
 		if (stack->values[i] < lowest_value)
