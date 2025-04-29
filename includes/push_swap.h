@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:49:22 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 12:44:32 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:08:15 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_stack
 	char	id;
 }	t_stack;
 
-t_error	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b);
+void	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b);
 void	swap(t_stack *stack, bool log);
 void	ss(t_stack *stack_a, t_stack *stack_b);
 void	push(t_stack *to_stack, t_stack *from_stack);
@@ -42,5 +42,7 @@ void	r_rotate(t_stack *stack, bool log);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
 void	push_swap(t_stack *stack_a, t_stack *stack_b);
 void	ft_putstr_fd(int fd, char *str);
+void	exit_elegantly(t_stack *stack_a, t_stack *stack_b, t_error error);
+bool	is_stack_sorted(t_stack *stack);
 
 #endif

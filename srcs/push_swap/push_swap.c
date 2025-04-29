@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:06:43 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 12:25:54 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:59:56 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,23 +126,6 @@ void	finish(t_stack *stack)
 	}
 }
 
-bool	is_stack_sorted(t_stack *stack)
-{
-	size_t	i;
-	int		prev_num;
-
-	prev_num = stack->values[0];
-	i = 1;
-	while (i < stack->len)
-	{
-		if (prev_num > stack->values[i])
-			return (false);
-		prev_num = stack->values[i];
-		i ++;
-	}
-	return (true);
-}
-
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
 	size_t			i;
@@ -171,7 +154,7 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 			min_cost_a_index_target = next_value_index;
 			min_cost_b_index_target = i;
 		}
-		if (curr_cost == 1)
+		if (curr_cost >= 1)
 		{
 			b_to_a(stack_a, stack_b, next_value_index, i);
 			i = 0;

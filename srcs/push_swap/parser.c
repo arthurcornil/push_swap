@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:51:46 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 12:46:02 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:57:47 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 static bool	is_number(char *str)
 {
+	if (*str == 0)
+		return (false);
 	if (*str == '+' || *str == '-')
 		str ++;
+	if (*str == 0)
+		return (false);
 	while (*str)
 	{
 		if (!(*str >= '0' && *str <= '9'))
@@ -83,7 +87,7 @@ void	exit_elegantly(t_stack *stack_a, t_stack *stack_b, t_error error)
 	exit(0);
 }
 
-t_error	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
+void	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 {
 	int			i;
 	long int	curr_val;
@@ -109,5 +113,4 @@ t_error	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 		exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
 	stack_a->len = argc - 1;
 	stack_b->len = 0;
-	return (NONE);
 }
