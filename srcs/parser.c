@@ -6,23 +6,29 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:51:46 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/23 17:31:48 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:46:02 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static bool	ft_isnum(char c)
+static bool	is_number(char *str)
 {
-	if (c >= '0' && c <= '9')
-		return (true);
-	return (false);
+	if (*str == '+' || *str == '-')
+		str ++;
+	while (*str)
+	{
+		if (!(*str >= '0' && *str <= '9'))
+			return (false);
+		str ++;
+	}
+	return (true);
 }
 
-static int	ft_atoi(const char *str)
+static long int	ft_atol(const char *str)
 {
-	bool	is_negative;
-	int		result;
+	bool			is_negative;
+	long int		result;
 
 	is_negative = false;
 	if (*str == '-' || *str == '+')
@@ -32,7 +38,7 @@ static int	ft_atoi(const char *str)
 		str ++;
 	}
 	result = 0;
-	while (ft_isnum(*str))
+	while (*str >= '0' && *str <= '9')
 	{
 		result *= 10;
 		if (is_negative)
@@ -42,33 +48,6 @@ static int	ft_atoi(const char *str)
 		str ++;
 	}
 	return (result);
-}
-
-bool	can_convert_str_to_int(char *str)
-{
-	if (*str == '-' || *str == '+')
-		str ++;
-	while (*str)
-	{
-		if (!ft_isnum(*str))
-			return (false);
-		str ++;
-	}
-	return (true);
-}
-
-bool	are_args_valid(int argc, char **argv)
-{
-	int	i;
-
-	i = 1;
-	while (i < argc)
-	{
-		if (!can_convert_str_to_int(argv[i]))
-			return (false);
-		i ++;
-	}
-	return (true);
 }
 
 bool	contains_duplicates(int size, int *stack_a)
@@ -91,29 +70,43 @@ bool	contains_duplicates(int size, int *stack_a)
 	return (false);
 }
 
+void	exit_elegantly(t_stack *stack_a, t_stack *stack_b, t_error error)
+{
+	if (stack_a->values)
+		free(stack_a->values);
+	if (stack_b->values)
+		free(stack_b->values);
+	if (error == WRONG_INPUT_FORMAT)
+		ft_putstr_fd(2, "Error\n");
+	else if (error != NONE)
+		exit(1);
+	exit(0);
+}
+
 t_error	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 {
-	int	i;
+	int			i;
+	long int	curr_val;
 
-	if (!are_args_valid(argc, argv))
-		return (WRONG_INT_FORMAT);
 	stack_a->values = (int *)malloc(sizeof(int) * (argc - 1));
 	if (!stack_a->values)
-		return (DYNAMIC_ALLOCATION_FAILURE);
+		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
 	stack_b->values = (int *)malloc(sizeof(int) * (argc - 1));
 	if (!stack_b->values)
-	{
-		free(stack_a->values);
-		return (DYNAMIC_ALLOCATION_FAILURE);
-	}
+		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
 	i = 0;
 	while (i < argc - 1)
 	{
-		stack_a->values[i] = ft_atoi(argv[i + 1]);
+		if (!is_number(argv[i + 1]))
+			exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
+		curr_val = ft_atol(argv[i + 1]);
+		if (curr_val > 2147483647 || curr_val < -2147483648)
+			exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
+		stack_a->values[i] = (int) curr_val;
 		i ++;
 	}
 	if (contains_duplicates(argc - 1, stack_a->values))
-		return (DUPLICATE_ENTRIES);
+		exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
 	stack_a->len = argc - 1;
 	stack_b->len = 0;
 	return (NONE);
