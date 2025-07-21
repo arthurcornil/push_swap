@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/18 16:53:12 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/18 17:48:30 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
+#include <stdio.h>
 
-bool	is_stack_sorted(t_stack *stack)
+void	*ft_realloc(void *ptr, size_t size)
 {
+	size_t	*curr_size;
+	void	*newptr;
 	size_t	i;
-	int		prev_num;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	if (!ptr)
+		return (ft_malloc(size));
+	curr_size = (size_t *)ptr - 1;
+	newptr = ft_malloc(size);
+	if (!newptr)
+		return (NULL);
+	i = 0;
+	while (i < size && i < *curr_size)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
+		((unsigned char *)newptr)[i] = ((unsigned char *)ptr)[i];
 		i ++;
 	}
-	return (true);
+	ft_free(ptr);
+	return (newptr);
 }
-

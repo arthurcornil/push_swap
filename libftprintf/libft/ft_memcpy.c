@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/03/27 07:56:16 by arcornil          #+#    #+#             */
+/*   Updated: 2025/03/27 10:26:47 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	i;
-	int		prev_num;
+	unsigned char		*d;
+	const unsigned char	*s;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	d = (unsigned char *)dst;
+	s = (const unsigned char *)src;
+	if (!dst && !src)
+		return (NULL);
+	while (n)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
+		*d ++ = *s ++;
+		n --;
 	}
-	return (true);
+	return (dst);
 }
-

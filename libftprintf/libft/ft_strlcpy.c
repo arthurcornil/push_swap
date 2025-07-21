@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/03/27 08:32:12 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/03 12:22:31 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
-	int		prev_num;
+	size_t	src_len;	
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	i = 0;
+	src_len = ft_strlen(src);
+	if (!dstsize)
+		return (src_len);
+	while (i < dstsize - 1 && src[i])
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
+		dst[i] = src[i];
 		i ++;
 	}
-	return (true);
+	dst[i] = 0;
+	return (src_len);
 }
-

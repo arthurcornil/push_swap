@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 17:06:43 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:56 by arcornil         ###   ########.fr       */
+/*   Created: 2025/07/21 11:14:10 by arcornil          #+#    #+#             */
+/*   Updated: 2025/07/21 11:54:39 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	tiny_sort(t_stack *stack)
+void	pico_sort(t_stack *stack)
 {
 	size_t	highest_value_index;
 	size_t	i;
@@ -21,7 +21,7 @@ void	tiny_sort(t_stack *stack)
 	highest_value_index = 0;
 	while (i < stack->len)
 	{
-		if (stack->values[i] > stack->values[highest_value_index])
+		if (stack->nodes[i].value > stack->nodes[highest_value_index].value)
 			highest_value_index = i;
 		i ++;
 	}
@@ -29,144 +29,115 @@ void	tiny_sort(t_stack *stack)
 		rotate(stack, true);
 	else if (highest_value_index == 1)
 		r_rotate(stack, true);
-	if (stack->values[0] > stack->values[1])
+	if (stack->nodes[0].value > stack->nodes[1].value)
 		swap(stack, true);
 }
 
-size_t get_next_value_index(int value, t_stack *stack)
+void	mini_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	size_t	i;
-	int		lowest_value_index;
-	size_t	lowest_upper_sibling_index;
-	bool	found;
+	unsigned int	small_index;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	stack_a_original_len;
+
+	stack_a_original_len = stack_a->len;
+	small_index = 5 - stack_a_original_len;
+	while (small_index <= 1)
+	{
+		i = 0;
+		while (i < stack_a->len)
+		{
+			if (stack_a->nodes[i].index == small_index)
+				break ;
+			i ++;
+		}
+		if (i <= stack_a->len / 2)
+		{
+			while (i > 0)
+			{
+				rotate(stack_a, true);
+				i --;
+			}
+		}
+		else
+		{
+			j = stack_a->len - i;
+			while (j > 0)
+			{
+				r_rotate(stack_a, true);
+				j --;
+			}
+		}
+		push(stack_b, stack_a);
+		small_index ++;
+	}
+	pico_sort(stack_a);
+	small_index = 5 - stack_a_original_len;
+	while (small_index <= 1)
+	{
+		push(stack_a, stack_b);
+		small_index ++;
+	}
+}
+
+int	get_nth_bit(unsigned int num, unsigned int n)
+{
+	return ((num >> n) & 1);
+}
+
+void	radix_sort(t_stack *stack_a, t_stack *stack_b, unsigned int	max_bits)
+{
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	stack_a_len;
 
 	i = 0;
-	found = false;
-	lowest_value_index = 0;
-	while (i < stack->len)
+	stack_a_len = stack_a->len;
+	while (i < max_bits)
 	{
-		if (stack->values[i] > value && (!found || (found && stack->values[i] < stack->values[lowest_upper_sibling_index])))
+		j = 0;
+		while (j < stack_a_len)
 		{
-			lowest_upper_sibling_index = i;
-			if (!found)
-				found = true;
+			if (get_nth_bit(stack_a->nodes[0].index, i) == 0)
+				push(stack_b, stack_a);
+			else
+				rotate(stack_a, true);
+			j ++;
 		}
-		if (!found && stack->values[i] < stack->values[lowest_value_index])
-			lowest_value_index = i;
+		while (stack_b->len > 0)
+			push(stack_a, stack_b);
 		i ++;
-	}
-	if (!found)
-		return (lowest_value_index);
-	return (lowest_upper_sibling_index);
-}
-
-unsigned int	get_cost_to_top(t_stack *stack, size_t index)
-{
-	if (index > stack->len / 2)
-		return (stack->len - index);
-	else
-		return (index);
-}
-
-void	b_to_a(t_stack *stack_a, t_stack *stack_b, size_t a_index, size_t b_index)
-{
-	int	stack_a_top_target = stack_a->values[a_index];
-	int	stack_b_top_target = stack_b->values[b_index];
-
-	if (a_index > stack_a->len / 2)
-	{
-		while (stack_a->values[0] != stack_a_top_target)
-			r_rotate(stack_a, true);
-	}
-	else
-	{
-		while (stack_a->values[0] != stack_a_top_target)
-			rotate(stack_a, true);
-	}
-	if (b_index > stack_b->len / 2)
-	{
-		while (stack_b->values[0] != stack_b_top_target)
-			r_rotate(stack_b, true);
-	}
-	else
-	{
-		while (stack_b->values[0] != stack_b_top_target)
-			rotate(stack_b, true);
-	}
-	push(stack_a, stack_b);
-}
-
-void	finish(t_stack *stack)
-{
-	size_t	i;
-	size_t	lowest_value_index;
-	int		lowest_value;
-
-	i = 0;
-	lowest_value_index = 0;
-	lowest_value = stack->values[0];
-	while (i < stack->len)
-	{
-		if (stack->values[i] < lowest_value)
-		{
-			lowest_value_index = i;
-			lowest_value = stack->values[i];
-		}
-		i ++;
-	}
-	if (lowest_value_index > stack->len / 2)
-	{
-		while (stack->values[0] != lowest_value)
-			r_rotate(stack, true);
-	}
-	else
-	{
-		while (stack->values[0] != lowest_value)
-			rotate(stack, true);
 	}
 }
 
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
-	size_t			i;
-	size_t			next_value_index;
-	unsigned int	min_cost_found;
-	unsigned int	curr_cost;
-	size_t			min_cost_a_index_target;
-	size_t			min_cost_b_index_target;
+	unsigned int	highest_index;
+	unsigned int	i;
+	unsigned int	max_bits;
 
 	if (is_stack_sorted(stack_a))
 		return ;
-	while (stack_a->len > 3)
-		push(stack_b, stack_a);
-	tiny_sort(stack_a);
-	if (stack_a->len + stack_b->len <= 3)
-		return ;
-	i = 0;
-	min_cost_found = UINT_MAX;
-	while (stack_b->len > 0)
+	if (stack_a->len == 2)
+		swap(stack_a, true);
+	else if (stack_a->len == 3)
+		pico_sort(stack_a);
+	else if (stack_a->len == 4 || stack_a->len == 5)
+		mini_sort(stack_a, stack_b);
+	else
 	{
-		next_value_index = get_next_value_index(stack_b->values[i], stack_a);
-		curr_cost = get_cost_to_top(stack_a, next_value_index) + get_cost_to_top(stack_b, i);
-		if (curr_cost < min_cost_found)
+		i = 0;
+		highest_index = 0;
+		while (i < stack_a->len)
 		{
-			min_cost_found = curr_cost;
-			min_cost_a_index_target = next_value_index;
-			min_cost_b_index_target = i;
+			if (stack_a->nodes[i].index > highest_index)
+				highest_index = stack_a->nodes[i].index;
+			i ++;
 		}
-		if (curr_cost >= 1)
-		{
-			b_to_a(stack_a, stack_b, next_value_index, i);
-			i = 0;
-			continue ;
-		}
-		else if (i == stack_b->len - 1)
-		{
-			b_to_a(stack_a, stack_b, min_cost_a_index_target, min_cost_b_index_target);
-			i = 0;
-			continue ;
-		}
-		i ++;
+		max_bits = 1;
+		while ((highest_index >> max_bits) != 0)
+			max_bits ++;
+		radix_sort(stack_a, stack_b, max_bits);
 	}
-	finish(stack_a);
+	//free everything.
 }

@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_print_percent.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/02/17 14:40:11 by arcornil          #+#    #+#             */
+/*   Updated: 2025/03/17 13:23:46 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/ft_printf_bonus.h"
 
-bool	is_stack_sorted(t_stack *stack)
+void	ft_print_percent(t_print *tab)
 {
-	size_t	i;
-	int		prev_num;
-
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
-	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
-	}
-	return (true);
+	if (tab->width > 0 && !tab->dash)
+		ft_right_indent(tab, 1);
+	tab->length += write(1, "%", 1);
+	if (tab->width > 0 && tab->dash)
+		ft_left_indent(tab, 1);
+	ft_reset_tab(tab);
 }
-

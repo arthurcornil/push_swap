@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/03/27 14:16:25 by arcornil          #+#    #+#             */
+/*   Updated: 2025/03/27 14:22:08 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	size_t	slen;
 	size_t	i;
-	int		prev_num;
+	char	*newstr;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	if (!s)
+		return (NULL);
+	slen = ft_strlen(s);
+	if ((start + len) > slen)
+		len = slen - start;
+	if (start > slen)
+		len = 0;
+	newstr = malloc(len + 1 * sizeof(char));
+	if (!newstr)
+		return (NULL);
+	i = 0;
+	while (i < len && start <= slen)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
+		newstr[i] = s[start];
+		start ++;
 		i ++;
 	}
-	return (true);
+	newstr[i] = 0;
+	return (newstr);
 }
-

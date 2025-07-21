@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/21 18:19:10 by arcornil          #+#    #+#             */
+/*   Updated: 2025/05/03 12:28:48 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/ft_printf_bonus.h"
 
-bool	is_stack_sorted(t_stack *stack)
+int	ft_printf(const char *format, ...)
 {
-	size_t	i;
-	int		prev_num;
+	t_print	tab;
+	int		i;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	ft_init_tab(&tab);
+	va_start(tab.args, format);
+	i = 0;
+	while (format[i])
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
+		if (format[i] == '%')
+			i = ft_get_format(&tab, format, i + 1);
+		else
+			tab.length += write(1, (format + i), 1);
 		i ++;
 	}
-	return (true);
+	va_end(tab.args);
+	return (tab.length);
 }
-

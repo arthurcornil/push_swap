@@ -1,6 +1,6 @@
 CC=cc
 
-CFLAGS=-Wall -Wextra -Werror
+CFLAGS=-Wall -Wextra -Werror -g
 
 RM=rm -rf
 
@@ -8,6 +8,8 @@ SRCS_DIR=./srcs/push_swap/
 
 BONUS_DIR=./srcs/checker_bonus/
 GNL_DIR=./srcs/checker_bonus/get_next_line_bonus/
+LIBFTPRINTF_DIR=./libftprintf/
+LIBFTPRINTF=$(LIBFTPRINTF_DIR)libftprintf.a
 
 SRCS=$(SRCS_DIR)main.c\
 	 $(SRCS_DIR)operations.c\
@@ -24,21 +26,33 @@ BONUS_SRCS=$(BONUS_DIR)checker_bonus.c\
 		   $(SRCS_DIR)parser.c\
 		   $(SRCS_DIR)push_swap_utils.c
 
+OBJS=$(SRCS:.c=.o)
+BOBJS=$(BONUS_SRCS:.c=.o)
 
 INC_DIR=./includes/
 
 NAME=push_swap
 
-all:
-	$(CC) $(CFLAGS) $(SRCS) -I $(INC_DIR) -o $(NAME)
+%.o: %.c
+	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFTPRINTF_DIR)includes/ -c $< -o $@
 
-debug:
-	$(CC) $(CFLAGS) -g $(SRCS) -I $(INC_DIR) -o $(NAME)
+all: libftprintf.a $(OBJS) 
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFTPRINTF) -o push_swap 
 
 bonus: $(NAME)
-	$(CC) $(CFLAGS) $(BONUS_SRCS) -I $(INC_DIR) -o checker 
+	$(CC) $(CFLAGS) $(BOBJS) $(LIBFTPRINTF) -o $(NAME)
+
+libftprintf.a:
+	@make -C $(LIBFTPRINTF_DIR)
 
 $(NAME): all
 
-fclean:
+clean:
+	$(RM) $(SRCS_DIR)$(OBJS)
+	@make clean -C $(LIBFTPRINTF_DIR)
+
+fclean: clean
 	$(RM) $(NAME)
+	@make fclean -C $(LIBFTPRINTF_DIR)
+
+re: fclean all

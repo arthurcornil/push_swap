@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/03/27 08:33:39 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/10 13:12:51 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
-	int		prev_num;
-
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	while (*s)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
+		if (*s == (char)c)
+			return ((char *)s);
+		s ++;
 	}
-	return (true);
+	if (*s == (char)c)
+		return ((char *)s);
+	return (NULL);
 }
-
