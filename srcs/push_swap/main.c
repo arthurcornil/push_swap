@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
 #include <stdio.h>
 
 void	print_stack(t_stack *stack)
@@ -25,20 +25,41 @@ void	print_stack(t_stack *stack)
 	}
 }
 
+bool	is_sorted(t_stack *stack)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < stack->len)
+	{
+		if (i != stack->nodes[i].index)
+		{
+			ft_printf("i: %d, index: %d", i, stack->nodes[i].index);
+			return (false);
+		}
+		i ++;
+	}
+	return (true);
+}
+
 int	main(int ac, char **av)
 {
 	t_stack	stack_a;
 	t_stack	stack_b;
 
+	if (ac == 1)
+			return (1);
 	stack_a.nodes = NULL;
 	stack_b.nodes = NULL;
-	if (ac == 1)
-		exit_elegantly(&stack_a, &stack_b, WRONG_INPUT_FORMAT);
 	stack_a.id = 'a';
 	stack_b.id = 'b';
 	get_stacks(ac, av, &stack_a, &stack_b);
 	push_swap(&stack_a, &stack_b);
 	//print_stack(&stack_a);
+	//if (is_sorted(&stack_a))
+	//	ft_printf("It's all sorted");
+	//else
+	//	ft_printf("not sorted bro");
 	exit_elegantly(&stack_a, &stack_b, NONE);
 	return (0);
 }
