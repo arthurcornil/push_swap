@@ -17,7 +17,15 @@ def main():
         print("Number of integers must be positive.")
         sys.exit(1)
 
-    numbers = [random.randint(-1000, 1000) for _ in range(n)]
+    range_min, range_max = -10000, 10000
+    possible_values = range_min, range_max
+    total_unique = range_max - range_min + 1
+
+    if n > total_unique:
+        print(f"Cannot generate {n} unique integers in the range [{range_min}, {range_max}].")
+        sys.exit(1)
+
+    numbers = random.sample(range(range_min, range_max + 1), n)
     print(' '.join(str(num) for num in numbers))
 
 if __name__ == "__main__":
