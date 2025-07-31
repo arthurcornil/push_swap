@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/03/27 14:26:47 by arcornil          #+#    #+#             */
+/*   Updated: 2025/03/27 14:32:22 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	i;
-	int		prev_num;
+	size_t	len_s1;
+	size_t	len_s2;
+	char	*str;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
-	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
-	}
-	return (true);
+	if (!s1 || !s2)
+		return (NULL);
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	str = malloc((len_s1 + len_s2 + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	ft_memcpy(str, s1, len_s1);
+	ft_memcpy(str + len_s1, s2, len_s2);
+	str[len_s1 + len_s2] = 0;
+	return (str);
 }
-

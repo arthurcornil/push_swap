@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/03/27 08:07:29 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/10 13:25:52 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
-	int		prev_num;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	if (!dst && !src)
+		return (NULL);
+	if (len == 0)
+		return (dst);
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	if (d > s && d < s + len)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
+		while (len--)
+			d[len] = s[len];
 	}
-	return (true);
+	else
+	{
+		i = 0;
+		while (i < len)
+		{
+			d[i] = s[i];
+			i ++;
+		}
+	}
+	return (dst);
 }
-

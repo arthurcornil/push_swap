@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_print_uint.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/02/17 14:41:10 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/21 18:00:43 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/ft_printf.h"
 
-bool	is_stack_sorted(t_stack *stack)
+static void	ft_putuint(unsigned int num, t_print *tab)
 {
-	size_t	i;
-	int		prev_num;
+	unsigned int		factor;
+	char				digit;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	factor = ft_get_factor(num);
+	while (factor != 0)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
+		digit = (num / factor) + '0';
+		tab->length += write(1, &digit, 1);
+		num %= factor;
+		factor /= 10;
 	}
-	return (true);
 }
 
+void	ft_print_uint(t_print *tab)
+{
+	unsigned int	num;
+
+	num = va_arg(tab->args, unsigned int);
+	ft_putuint(num, tab);
+}

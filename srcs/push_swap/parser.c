@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:51:46 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 12:57:47 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:54:37 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static long int	ft_atol(const char *str)
 	return (result);
 }
 
-bool	contains_duplicates(int size, int *stack_a)
+bool	contains_duplicates(int size, t_node *nodes)
 {
 	int	i;
 	int	j;
@@ -65,7 +65,7 @@ bool	contains_duplicates(int size, int *stack_a)
 		j = i + 1;
 		while (j < size)
 		{
-			if (stack_a[i] == stack_a[j])
+			if (nodes[i].value == nodes[j].value)
 				return (true);
 			j ++;
 		}
@@ -76,41 +76,85 @@ bool	contains_duplicates(int size, int *stack_a)
 
 void	exit_elegantly(t_stack *stack_a, t_stack *stack_b, t_error error)
 {
-	if (stack_a->values)
-		free(stack_a->values);
-	if (stack_b->values)
-		free(stack_b->values);
-	if (error == WRONG_INPUT_FORMAT)
-		ft_putstr_fd(2, "Error\n");
+	if (stack_a->nodes)
+		free(stack_a->nodes);
+	if (stack_b->nodes)
+		free(stack_b->nodes);
+	if (error == WRONG_INPUT_FORMAT || error == TOO_MANY_ELEMENTS)
+		ft_putstr_fd("Error\n", 2);
 	else if (error != NONE)
 		exit(1);
 	exit(0);
 }
 
-void	parse_args(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
+void	get_indeces(t_stack *stack)
 {
-	int			i;
-	long int	curr_val;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	curr_index;
 
-	stack_a->values = (int *)malloc(sizeof(int) * (argc - 1));
-	if (!stack_a->values)
-		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
-	stack_b->values = (int *)malloc(sizeof(int) * (argc - 1));
-	if (!stack_b->values)
-		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
 	i = 0;
-	while (i < argc - 1)
+	while (i < stack->len)
 	{
-		if (!is_number(argv[i + 1]))
-			exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
-		curr_val = ft_atol(argv[i + 1]);
-		if (curr_val > 2147483647 || curr_val < -2147483648)
-			exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
-		stack_a->values[i] = (int) curr_val;
+		curr_index = 0;
+		j = 0;
+		while (j < stack->len)
+		{
+			if (i == j)
+			{
+				j ++;
+				continue ;
+			}
+			else if (stack->nodes[i].value > stack->nodes[j].value)
+				curr_index ++;
+			j ++;
+		}
+		stack->nodes[i].index = curr_index;
 		i ++;
 	}
-	if (contains_duplicates(argc - 1, stack_a->values))
+}
+
+void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
+{
+	unsigned int				i;
+	long int		curr_val;
+	unsigned int	num_elems;
+	char			**elems;
+
+	if ((unsigned int)(argc - 1) > UINT_MAX)
+		exit_elegantly(stack_a, stack_b, TOO_MANY_ELEMENTS);
+	if (argc == 2)
+	{
+		elems = ft_split(argv[1], ' ');
+		num_elems = 0;
+		while (elems[num_elems])
+			num_elems ++;
+	}
+	else
+	{
+		elems = argv + 1;
+		num_elems = argc - 1;
+	}
+	stack_a->nodes = (t_node *)malloc(sizeof(t_node) * (num_elems));
+	if (!stack_a->nodes)
+		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
+	stack_b->nodes = (t_node *)malloc(sizeof(t_node) * (num_elems));
+	if (!stack_b->nodes)
+		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
+	i = 0;
+	while (i < num_elems)
+	{
+		if (!is_number(elems[i]))
+			exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
+		curr_val = ft_atol(elems[i]);
+		if (curr_val > 2147483647 || curr_val < -2147483648)
+			exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
+		stack_a->nodes[i].value = (int) curr_val;
+		i ++;
+	}
+	if (contains_duplicates(argc - 1, stack_a->nodes))
 		exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
-	stack_a->len = argc - 1;
+	stack_a->len = num_elems;
 	stack_b->len = 0;
+	get_indeces(stack_a);
 }

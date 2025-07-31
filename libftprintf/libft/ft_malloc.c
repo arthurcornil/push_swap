@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/18 16:42:51 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/18 17:36:44 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+void	*ft_malloc(size_t count)
 {
-	size_t	i;
-	int		prev_num;
+	size_t	*alloc_bytes;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
-	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
-	}
-	return (true);
+	alloc_bytes = (size_t *)malloc(sizeof(size_t) + count);
+	if (!alloc_bytes)
+		return (NULL);
+	*alloc_bytes = count;
+	return ((void *)(alloc_bytes + 1));
 }
-

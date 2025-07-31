@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/03 21:08:01 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/10 15:58:31 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	size_t	i;
-	int		prev_num;
+	t_list	*p;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	if (!lst)
+		return ;
+	p = *lst;
+	if (!*lst)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
+		*lst = new;
+		return ;
 	}
-	return (true);
+	while (p->next)
+		p = p->next;
+	p->next = new;
 }
-

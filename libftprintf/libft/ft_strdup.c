@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/14 20:32:51 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/14 21:12:52 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+static char	*ft_strcpy(char *dest, const char *src)
 {
-	size_t	i;
-	int		prev_num;
+	char	*start_dest;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	start_dest = dest;
+	while (*src != 0)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
+		*dest = *src;
+		dest ++;
+		src ++;
 	}
-	return (true);
+	*dest = 0;
+	return (start_dest);
 }
 
+char	*ft_strdup(const char *src)
+{
+	char	*dest;
+	size_t	dest_len;
+
+	dest_len = ft_strlen(src);
+	dest = (char *)malloc(sizeof(char) * dest_len + 1);
+	if (!dest)
+		return (NULL);
+	return (ft_strcpy(dest, src));
+}

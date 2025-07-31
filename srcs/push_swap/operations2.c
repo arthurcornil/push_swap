@@ -16,16 +16,16 @@
 void	r_rotate(t_stack *stack, bool log)
 {
 	size_t	i;
-	int		tmp;
+	t_node	tmp_node;
 
 	i = stack->len - 1;
-	tmp = stack->values[stack->len - 1];
+	tmp_node = stack->nodes[stack->len - 1];
 	while (i > 0)
 	{
-		stack->values[i] = stack->values[i - 1];
+		stack->nodes[i] = stack->nodes[i - 1];
 		i --;
 	}
-	stack->values[0] = tmp;
+	stack->nodes[0] = tmp_node;
 	if (log)
 		printf("rr%c\n", stack->id);
 }

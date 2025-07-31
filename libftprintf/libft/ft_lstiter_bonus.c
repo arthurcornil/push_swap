@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/03 21:17:19 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/03 21:21:21 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool	is_stack_sorted(t_stack *stack)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	size_t	i;
-	int		prev_num;
-
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
+	if (!lst || !f)
+		return ;
+	while (lst)
 	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
+		f(lst->content);
+		lst = lst->next;
 	}
-	return (true);
 }
-

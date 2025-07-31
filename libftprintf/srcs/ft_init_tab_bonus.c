@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_init_tab_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/22 09:59:23 by arcornil          #+#    #+#             */
+/*   Updated: 2025/04/22 10:00:45 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/ft_printf_bonus.h"
 
-bool	is_stack_sorted(t_stack *stack)
+t_print	*ft_init_tab(t_print *tab)
 {
-	size_t	i;
-	int		prev_num;
-
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
-	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
-	}
-	return (true);
+	tab->width = 0;
+	tab->precision = -1;
+	tab->is_num = 0;
+	tab->dash = 0;
+	tab->length = 0;
+	tab->sign = 0;
+	tab->is_zero = 0;
+	tab->hashtag = 0;
+	tab->space = 0;
+	return (tab);
 }
-

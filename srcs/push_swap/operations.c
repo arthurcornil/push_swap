@@ -15,13 +15,13 @@
 
 void	swap(t_stack *stack, bool log)
 {
-	int	tmp;
+	t_node	tmp_node;
 
 	if (stack->len < 2)
 		return ;
-	tmp = stack->values[0];
-	stack->values[0] = stack->values[1];
-	stack->values[1] = tmp;
+	tmp_node = stack->nodes[0];
+	stack->nodes[0] = stack->nodes[1];
+	stack->nodes[1] = tmp_node;
 	if (log)
 		printf("s%c\n", stack->id);
 }
@@ -42,14 +42,14 @@ void	push(t_stack *to_stack, t_stack *from_stack)
 	i = to_stack->len;
 	while (i >= 1)
 	{
-		to_stack->values[i] = to_stack->values[i - 1];
+		to_stack->nodes[i] = to_stack->nodes[i - 1];
 		i --;
 	}
-	to_stack->values[0] = from_stack->values[0];
+	to_stack->nodes[0] = from_stack->nodes[0];
 	i = 0;
 	while (i < (from_stack->len) - 1)
 	{
-		from_stack->values[i] = from_stack->values[i + 1];
+		from_stack->nodes[i] = from_stack->nodes[i + 1];
 		i ++;
 	}
 	to_stack->len ++;
@@ -60,16 +60,16 @@ void	push(t_stack *to_stack, t_stack *from_stack)
 void	rotate(t_stack *stack, bool log)
 {
 	size_t	i;
-	int		tmp;
+	t_node	tmp_node;
 
 	i = 0;
-	tmp = stack->values[0];
+	tmp_node = stack->nodes[0];
 	while (i < (stack->len) - 1)
 	{
-		stack->values[i] = stack->values[i + 1];
+		stack->nodes[i] = stack->nodes[i + 1];
 		i ++;
 	}
-	stack->values[stack->len - 1] = tmp;
+	stack->nodes[stack->len - 1] = tmp_node;
 	if (log)
 		printf("r%c\n", stack->id);
 }

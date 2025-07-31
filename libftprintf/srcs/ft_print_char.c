@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_print_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:09:18 by arcornil          #+#    #+#             */
-/*   Updated: 2025/04/29 16:59:50 by arcornil         ###   ########.fr       */
+/*   Created: 2025/04/22 10:02:44 by arcornil          #+#    #+#             */
+/*   Updated: 2025/05/08 10:27:26 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/ft_printf.h"
 
-bool	is_stack_sorted(t_stack *stack)
+void	ft_print_char(t_print *tab)
 {
-	size_t	i;
-	int		prev_num;
+	char	a;
 
-	prev_num = stack->nodes[0].value;
-	i = 1;
-	while (i < stack->len)
-	{
-		if (prev_num > stack->nodes[i].value)
-			return (false);
-		prev_num = stack->nodes[i].value;
-		i ++;
-	}
-	return (true);
+	a = (char)va_arg(tab->args, int);
+	tab->length += write(1, &a, 1);
 }
-
