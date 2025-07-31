@@ -13,18 +13,22 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include "ft_printf.h"
-#include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <limits.h>
+# include "../libftprintf/includes/ft_printf.h"
+# include <stdlib.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <limits.h>
+
+# define PICO_SORT_LEN 3
+# define MINI_SORT_LEN 15
 
 typedef enum e_error
 {
 	NONE,
 	DYNAMIC_ALLOCATION_FAILURE,
 	WRONG_INPUT_FORMAT,
-	TOO_MANY_ELEMENTS
+	TOO_MANY_ELEMENTS,
+	EMPTY_STACK
 }	t_error;
 
 typedef struct s_node

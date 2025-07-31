@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
 
 static bool	is_number(char *str)
 {
@@ -80,7 +80,7 @@ void	exit_elegantly(t_stack *stack_a, t_stack *stack_b, t_error error)
 		free(stack_a->nodes);
 	if (stack_b->nodes)
 		free(stack_b->nodes);
-	if (error == WRONG_INPUT_FORMAT || error == TOO_MANY_ELEMENTS)
+	if (error == WRONG_INPUT_FORMAT || error == TOO_MANY_ELEMENTS || error == EMPTY_STACK)
 		ft_putstr_fd("Error\n", 2);
 	else if (error != NONE)
 		exit(1);
@@ -121,8 +121,6 @@ void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 	unsigned int	num_elems;
 	char			**elems;
 
-	if ((unsigned int)(argc - 1) > UINT_MAX)
-		exit_elegantly(stack_a, stack_b, TOO_MANY_ELEMENTS);
 	if (argc == 2)
 	{
 		elems = ft_split(argv[1], ' ');
@@ -135,6 +133,8 @@ void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 		elems = argv + 1;
 		num_elems = argc - 1;
 	}
+	if ((unsigned int)(num_elems) > UINT_MAX)
+		exit_elegantly(stack_a, stack_b, TOO_MANY_ELEMENTS);
 	stack_a->nodes = (t_node *)malloc(sizeof(t_node) * (num_elems));
 	if (!stack_a->nodes)
 		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
@@ -152,7 +152,9 @@ void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 		stack_a->nodes[i].value = (int) curr_val;
 		i ++;
 	}
-	if (contains_duplicates(argc - 1, stack_a->nodes))
+	if (i == 0)
+		exit_elegantly(stack_a, stack_b, EMPTY_STACK);
+	if (contains_duplicates(num_elems, stack_a->nodes))
 		exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
 	stack_a->len = num_elems;
 	stack_b->len = 0;
