@@ -10,20 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
 
 bool	is_stack_sorted(t_stack *stack)
 {
 	size_t	i;
 	int		prev_num;
 
-	prev_num = stack->nodes[0].value;
+	prev_num = stack->values[0];
 	i = 1;
 	while (i < stack->len)
 	{
-		if (prev_num > stack->nodes[i].value)
+		if (prev_num > stack->values[i])
 			return (false);
-		prev_num = stack->nodes[i].value;
+		prev_num = stack->values[i];
 		i ++;
 	}
 	return (true);

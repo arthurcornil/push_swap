@@ -10,29 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-#include <stdio.h>
+#include "../../includes/push_swap.h"
 
 void	r_rotate(t_stack *stack, bool log)
 {
 	size_t	i;
-	t_node	tmp_node;
+	int		tmp;
 
 	i = stack->len - 1;
-	tmp_node = stack->nodes[stack->len - 1];
+	tmp = stack->values[stack->len - 1];
 	while (i > 0)
 	{
-		stack->nodes[i] = stack->nodes[i - 1];
+		stack->values[i] = stack->values[i - 1];
 		i --;
 	}
-	stack->nodes[0] = tmp_node;
+	stack->values[0] = tmp;
 	if (log)
-		printf("rr%c\n", stack->id);
+		ft_printf("rr%c\n", stack->id);
 }
 
 void	rrr(t_stack *stack_a, t_stack *stack_b)
 {
 	r_rotate(stack_a, false);
 	r_rotate(stack_b, false);
-	printf("rrr\n");
+	ft_printf("rrr\n");
 }

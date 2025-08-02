@@ -54,7 +54,7 @@ static long int	ft_atol(const char *str)
 	return (result);
 }
 
-bool	contains_duplicates(int size, t_node *nodes)
+bool	contains_duplicates(int size, int *values)
 {
 	int	i;
 	int	j;
@@ -65,7 +65,7 @@ bool	contains_duplicates(int size, t_node *nodes)
 		j = i + 1;
 		while (j < size)
 		{
-			if (nodes[i].value == nodes[j].value)
+			if (values[i] == values[j])
 				return (true);
 			j ++;
 		}
@@ -76,42 +76,15 @@ bool	contains_duplicates(int size, t_node *nodes)
 
 void	exit_elegantly(t_stack *stack_a, t_stack *stack_b, t_error error)
 {
-	if (stack_a->nodes)
-		free(stack_a->nodes);
-	if (stack_b->nodes)
-		free(stack_b->nodes);
+	if (stack_a->values)
+		free(stack_a->values);
+	if (stack_b->values)
+		free(stack_b->values);
 	if (error == WRONG_INPUT_FORMAT || error == TOO_MANY_ELEMENTS || error == EMPTY_STACK)
 		ft_putstr_fd("Error\n", 2);
 	else if (error != NONE)
 		exit(1);
 	exit(0);
-}
-
-void	get_indeces(t_stack *stack)
-{
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	curr_index;
-
-	i = 0;
-	while (i < stack->len)
-	{
-		curr_index = 0;
-		j = 0;
-		while (j < stack->len)
-		{
-			if (i == j)
-			{
-				j ++;
-				continue ;
-			}
-			else if (stack->nodes[i].value > stack->nodes[j].value)
-				curr_index ++;
-			j ++;
-		}
-		stack->nodes[i].index = curr_index;
-		i ++;
-	}
 }
 
 void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
@@ -135,11 +108,11 @@ void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 	}
 	if ((unsigned int)(num_elems) > UINT_MAX)
 		exit_elegantly(stack_a, stack_b, TOO_MANY_ELEMENTS);
-	stack_a->nodes = (t_node *)malloc(sizeof(t_node) * (num_elems));
-	if (!stack_a->nodes)
+	stack_a->values = (int *)malloc(sizeof(int) * (num_elems));
+	if (!stack_a->values)
 		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
-	stack_b->nodes = (t_node *)malloc(sizeof(t_node) * (num_elems));
-	if (!stack_b->nodes)
+	stack_b->values = (int *)malloc(sizeof(int) * (num_elems));
+	if (!stack_b->values)
 		exit_elegantly(stack_a, stack_b, DYNAMIC_ALLOCATION_FAILURE);
 	i = 0;
 	while (i < num_elems)
@@ -149,14 +122,13 @@ void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b)
 		curr_val = ft_atol(elems[i]);
 		if (curr_val > 2147483647 || curr_val < -2147483648)
 			exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
-		stack_a->nodes[i].value = (int) curr_val;
+		stack_a->values[i] = (int)curr_val;
 		i ++;
 	}
 	if (i == 0)
 		exit_elegantly(stack_a, stack_b, EMPTY_STACK);
-	if (contains_duplicates(num_elems, stack_a->nodes))
+	if (contains_duplicates(num_elems, stack_a->values))
 		exit_elegantly(stack_a, stack_b, WRONG_INPUT_FORMAT);
 	stack_a->len = num_elems;
 	stack_b->len = 0;
-	get_indeces(stack_a);
 }

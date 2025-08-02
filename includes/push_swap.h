@@ -6,7 +6,7 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:49:22 by arcornil          #+#    #+#             */
-/*   Updated: 2025/07/21 11:40:06 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/08/01 10:44:09 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ typedef enum e_error
 	EMPTY_STACK
 }	t_error;
 
-typedef struct s_node
-{
-	int				value;
-	unsigned int	index;
-}	t_node;
-
 typedef struct s_stack
 {
-	t_node	*nodes;
+	int		*values;
 	size_t	len;
 	char	id;
 }	t_stack;
+
+typedef struct s_cheapest_operation
+{
+	size_t	origin_index;
+	size_t	target_index;
+}	t_cheapest_operation;
 
 void	get_stacks(int argc, char **argv, t_stack *stack_a, t_stack *stack_b);
 void	swap(t_stack *stack, bool log);

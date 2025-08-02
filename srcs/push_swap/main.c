@@ -6,40 +6,22 @@
 /*   By: arcornil <arcornil@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:42:12 by arcornil          #+#    #+#             */
-/*   Updated: 2025/07/21 11:42:22 by arcornil         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:20:05 by arcornil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
-#include <stdio.h>
 
-void	print_stack(t_stack *stack)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < stack->len) 
-	{
-		printf("%u -> %d\n", stack->nodes[i].index, stack->nodes[i].value);
-		i ++;
-	}
-}
-
-bool	is_sorted(t_stack *stack)
+void	print_stack(t_stack	*stack)
 {
 	unsigned int	i;
 
 	i = 0;
 	while (i < stack->len)
 	{
-		if (i != stack->nodes[i].index)
-		{
-			ft_printf("i: %d, index: %d", i, stack->nodes[i].index);
-			return (false);
-		}
+		ft_printf("%d\n", stack->values[i]);
 		i ++;
 	}
-	return (true);
 }
 
 int	main(int ac, char **av)
@@ -49,17 +31,11 @@ int	main(int ac, char **av)
 
 	if (ac == 1)
 			return (1);
-	stack_a.nodes = NULL;
-	stack_b.nodes = NULL;
 	stack_a.id = 'a';
 	stack_b.id = 'b';
 	get_stacks(ac, av, &stack_a, &stack_b);
 	push_swap(&stack_a, &stack_b);
 	//print_stack(&stack_a);
-	//if (is_sorted(&stack_a))
-	//	ft_printf("It's all sorted");
-	//else
-	//	ft_printf("not sorted bro");
 	exit_elegantly(&stack_a, &stack_b, NONE);
 	return (0);
 }
