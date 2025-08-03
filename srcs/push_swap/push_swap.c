@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
-#include <stdint.h>
 
 void	pico_sort(t_stack *stack)
 {

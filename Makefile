@@ -16,7 +16,6 @@ SRCS=$(SRCS_DIR)main.c\
 	 $(SRCS_DIR)operations2.c\
 	 $(SRCS_DIR)push_swap.c\
 	 $(SRCS_DIR)parser.c\
-	 $(SRCS_DIR)push_swap_utils.c \
 	 $(SRCS_DIR)turk_sort.c \
 	 $(SRCS_DIR)turk_sort_utils.c \
 	 $(SRCS_DIR)turk_sort_utils2.c \
