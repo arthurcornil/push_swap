@@ -24,10 +24,10 @@ BONUS_SRCS = \
     $(BONUS_DIR)checker_bonus.c \
     $(GNL_DIR)get_next_line_bonus.c \
     $(GNL_DIR)get_next_line_utils_bonus.c \
-    $(SRCS_DIR)operations.c \
-    $(SRCS_DIR)operations2.c \
+    $(BONUS_DIR)operations.c \
+    $(BONUS_DIR)operations2.c \
     $(SRCS_DIR)parser.c \
-    $(SRCS_DIR)push_swap_utils.c
+    $(SRCS_DIR)handle_errors.c
 
 OBJS   = $(SRCS:.c=.o)
 BOBJS  = $(BONUS_SRCS:.c=.o)
@@ -35,10 +35,10 @@ BOBJS  = $(BONUS_SRCS:.c=.o)
 INC_DIR = ./includes/
 
 NAME        = push_swap
-BONUS_NAME  = checker_bonus
+BONUS_NAME  = checker
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFTPRINTF_DIR)includes/ -c $< -o $@
+	$(CC) $(CFLAGS) -I$(LIBFTPRINTF_DIR)includes/ -c $< -o $@
 
 all: $(NAME)
 

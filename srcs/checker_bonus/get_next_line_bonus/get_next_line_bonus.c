@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker_bonus.h"
+#include "../../../includes/checker_bonus.h"
 
 char	*concat_packet(char *packet, char *str)
 {

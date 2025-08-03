@@ -10,7 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker_bonus.h"
+#include "../../includes/checker_bonus.h"
+
+bool	is_stack_sorted(t_stack *stack)
+{
+	size_t	i;
+	int		prev_num;
+
+	prev_num = stack->values[0];
+	i = 1;
+	while (i < stack->len)
+	{
+		if (prev_num > stack->values[i])
+			return (false);
+		prev_num = stack->values[i];
+		i ++;
+	}
+	return (true);
+}
 
 t_stack	*find_stack_with_id(char c, t_stack *stack_a, t_stack *stack_b)
 {
@@ -31,7 +48,7 @@ void	execute_operation(char *str, t_stack *stack_a, t_stack *stack_b)
 		else
 		{
 			selected_stack = find_stack_with_id(*str, stack_a, stack_b);
-			swap(selected_stack, true);
+			swap(selected_stack);
 		}
 	}
 	else if (*str == 'r')
@@ -40,7 +57,7 @@ void	execute_operation(char *str, t_stack *stack_a, t_stack *stack_b)
 		if (*str == 'a' || *str == 'b')
 		{
 			selected_stack = find_stack_with_id(*str, stack_a, stack_b);
-			rotate(selected_stack, true);
+			rotate(selected_stack);
 		}
 		else if (*str == 'r')
 		{
@@ -52,7 +69,7 @@ void	execute_operation(char *str, t_stack *stack_a, t_stack *stack_b)
 			else
 			{
 				selected_stack = find_stack_with_id(*str, stack_a, stack_b);
-				r_rotate(selected_stack, true);
+				r_rotate(selected_stack);
 			}
 		}
 	}
@@ -66,8 +83,6 @@ void	execute_operation(char *str, t_stack *stack_a, t_stack *stack_b)
 	}
 }
 
-#include <stdio.h>
-
 int	main(int ac, char **av)
 {
 	t_stack stack_a;
@@ -80,12 +95,13 @@ int	main(int ac, char **av)
 		exit_elegantly(&stack_a, &stack_b, WRONG_INPUT_FORMAT);
 	stack_a.id = 'a';
 	stack_b.id = 'b';
-	parse_args(ac, av, &stack_a, &stack_b);
+	get_stacks(ac, av, &stack_a, &stack_b);
 	while ((str = get_next_line(0)))
 		execute_operation(str, &stack_a, &stack_b);
 	if (is_stack_sorted(&stack_a))
-		printf("OK\n");
+		ft_printf("OK\n");
 	else
-		printf("KO\n");
+		ft_printf("KO\n");
+	exit_elegantly(&stack_a, &stack_b, NONE);
 	return (0);
 }
