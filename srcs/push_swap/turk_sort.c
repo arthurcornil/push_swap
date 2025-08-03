@@ -62,12 +62,8 @@ void	make_operations(t_stack *from, t_stack *to, t_cheapest_operation co)
 	a_is_top_half = is_in_top_half(co.origin_index, from);
 	b_is_top_half = is_in_top_half(co.target_index, to);
 	if (a_is_top_half == b_is_top_half)
-	{
 		rotate_both_stacks((t_rotate_both_stacks_args){
 			from, to, &cost_a, &cost_b, a_is_top_half});
-		rotate_single_stack(from, &cost_a, a_is_top_half);
-		rotate_single_stack(to, &cost_b, b_is_top_half);
-	}
 	rotate_single_stack(from, &cost_a, a_is_top_half);
 	rotate_single_stack(to, &cost_b, b_is_top_half);
 	push(to, from);
