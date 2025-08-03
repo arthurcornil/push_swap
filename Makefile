@@ -16,7 +16,13 @@ SRCS=$(SRCS_DIR)main.c\
 	 $(SRCS_DIR)operations2.c\
 	 $(SRCS_DIR)push_swap.c\
 	 $(SRCS_DIR)parser.c\
-	 $(SRCS_DIR)push_swap_utils.c
+	 $(SRCS_DIR)push_swap_utils.c \
+	 $(SRCS_DIR)turk_sort.c \
+	 $(SRCS_DIR)turk_sort_utils.c \
+	 $(SRCS_DIR)turk_sort_utils2.c \
+	 $(SRCS_DIR)find_index.c \
+	 $(SRCS_DIR)handle_errors.c
+
 
 BONUS_SRCS=$(BONUS_DIR)checker_bonus.c\
 		   $(GNL_DIR)get_next_line_bonus.c\
