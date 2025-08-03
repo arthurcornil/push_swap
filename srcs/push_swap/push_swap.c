@@ -33,6 +33,23 @@ void	pico_sort(t_stack *stack)
 		swap(stack, true);
 }
 
+bool	is_stack_sorted(t_stack *stack)
+{
+	size_t	i;
+	int		prev_num;
+
+	prev_num = stack->values[0];
+	i = 1;
+	while (i < stack->len)
+	{
+		if (prev_num > stack->values[i])
+			return (false);
+		prev_num = stack->values[i];
+		i ++;
+	}
+	return (true);
+}
+
 void	push_swap(t_stack *stack_a, t_stack *stack_b)
 {
 	if (stack_a->len <= 1 || is_stack_sorted(stack_a))
