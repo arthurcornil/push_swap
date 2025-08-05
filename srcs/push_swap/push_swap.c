@@ -56,7 +56,7 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 		return ;
 	else if (stack_a->len == 2)
 		swap(stack_a, true);
-	else if (stack_a->len == PICO_SORT_LEN)
+	else if (stack_a->len == 3)
 		pico_sort(stack_a);
 	else
 		turk_sort(stack_a, stack_b);

@@ -102,7 +102,7 @@ void	turk_sort(t_stack *stack_a, t_stack *stack_b)
 
 	push(stack_b, stack_a);
 	push(stack_b, stack_a);
-	while (stack_a->len > PICO_SORT_LEN)
+	while (stack_a->len > 3)
 		push_in_optimized_order(stack_a, stack_b);
 	pico_sort(stack_a);
 	while (stack_b->len)

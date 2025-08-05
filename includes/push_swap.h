@@ -19,9 +19,6 @@
 # include <unistd.h>
 # include <limits.h>
 
-# define PICO_SORT_LEN 3
-# define MINI_SORT_LEN 15
-
 typedef enum e_error
 {
 	NONE,

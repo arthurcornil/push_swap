@@ -42,12 +42,12 @@ BONUS_NAME  = checker
 
 all: $(NAME)
 
-$(NAME): $(LIBFTPRINTF) $(OBJS)
+$(NAME): $(OBJS) $(LIBFTPRINTF)
 	$(CC) $(CFLAGS) $^ -o $@
 
 bonus: $(BONUS_NAME)
 
-$(BONUS_NAME): $(LIBFTPRINTF) $(BOBJS)
+$(BONUS_NAME): $(BOBJS) $(LIBFTPRINTF)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(LIBFTPRINTF):
